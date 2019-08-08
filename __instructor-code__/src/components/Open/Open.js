@@ -1,6 +1,6 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
+import { Link } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 const Open = (props) => (
   <div className="open">
@@ -17,13 +17,21 @@ const Open = (props) => (
       </div>
       <div className="inside">
         <h1>Welcome, {props.user}!</h1>
+        {props.loading ? ('Loading...') : (
+          props.pokemon.results.map(el => (
+            <h3 key={el.name}>
+              {el.name}
+            </h3>
+          ))
+        )}
       </div>
     </div>
   </div>
 )
 function mapStateToProps(state) {
-  const {user} = state.userInfo
-  return {user}
+  const { user } = state.userInfo
+  const { pokemon, loading } = state.pokemonInfo
+  return { user, pokemon, loading }
 }
 
 export default connect(mapStateToProps)(Open)
